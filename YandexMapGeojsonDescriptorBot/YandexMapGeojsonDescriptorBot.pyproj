@@ -25,6 +25,7 @@
     <Compile Include="GeojsonDescriptorBot.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="run.py" />
     <Compile Include="test_DescriptorBot.py">
       <SubType>Code</SubType>
     </Compile>
