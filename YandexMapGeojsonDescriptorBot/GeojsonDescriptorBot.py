@@ -18,6 +18,45 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 
 ##
+### Function definitions
+
+def start(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+
+def count_objects_in_geojson(my_geojson):
+    num_of_polygons = 0
+    num_of_lines = 0
+    num_of_points = 0
+
+    for feature in my_geojson['features']:
+        if feature['geometry']['type'] == 'Polygon':
+            num_of_polygons += 1
+        if feature['geometry']['type'] == 'LineString':
+            num_of_lines += 1
+        if feature['geometry']['type'] == 'Point':
+            num_of_points += 1
+    
+    return num_of_polygons, num_of_lines, num_of_points
+
+def document_parsing(bot, update):
+    file_id = message.voice.file_id
+    newFile = bot.get_file(file_id)
+    newFile.download('voice.ogg')
+    my_file_path = newFile.file_path
+
+    file_api_url = "https://api.telegram.org/file/bot{}/".format(my_token)
+    resp = requests.get(file_api_url + my_file_path)
+    result_json = resp.json()
+
+    num_of_polygons, num_of_lines, num_of_points = count_objects_in_geojson(my_received_json)
+    message_text = 'Добрый день! Количество многоугольников в geojson: {}, количество линий:  {}, количество меток: {}'.format(num_of_polygons, num_of_lines, num_of_points)
+    bot.send_message(chat_id=update.message.chat_id, text=message_text)
+
+def echo(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
+
+
+##
 ### Message and command handlers
 from telegram.ext import CommandHandler
 from telegram.ext import Handler
@@ -44,44 +83,7 @@ updater.idle()
 
 
 
-## Function definitions
 
-def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
-
-def document_parsing(bot, update):
-    file_id = message.voice.file_id
-    newFile = bot.get_file(file_id)
-    newFile.download('voice.ogg')
-    my_file_path = newFile.file_path
-
-    file_api_url = "https://api.telegram.org/file/bot{}/".format(my_token)
-    resp = requests.get(file_api_url + my_file_path)
-    result_json = resp.json()
-
-    num_of_polygons, num_of_lines, num_of_points = count_objects_in_geojson(my_received_json)
-    message_text = 'Добрый день! Количество многоугольников в geojson: {}, количество линий:  {}, количество меток: {}'.format(num_of_polygons, num_of_lines, num_of_points)
-    bot.send_message(chat_id=update.message.chat_id, text=message_text)
-        
-
-def count_objects_in_geojson(my_geojson):
-    num_of_polygons = 0
-    num_of_lines = 0
-    num_of_points = 0
-
-    for feature in my_geojson['features']:
-        if feature['geometry']['type'] == 'Polygon':
-            num_of_polygons += 1
-        if feature['geometry']['type'] == 'LineString':
-            num_of_lines += 1
-        if feature['geometry']['type'] == 'Point':
-            num_of_points += 1
-    
-    return num_of_polygons, num_of_lines, num_of_points
-
-
-def echo(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
 
 
 
