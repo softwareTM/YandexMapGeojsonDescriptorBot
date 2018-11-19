@@ -1,7 +1,7 @@
 import pytest
 import json
 from YandexMapGeojsonDescriptorBot import BotHandler
-from YandexMapGeojsonDescriptorBot import count_objects_in_geojson
+from GeojsonDescriptorBot import count_objects_in_geojson
 
 if __name__ == '__main__':
     pytest.main()

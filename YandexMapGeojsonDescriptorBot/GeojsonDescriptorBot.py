@@ -39,27 +39,28 @@ def count_objects_in_geojson(my_geojson):
     return num_of_polygons, num_of_lines, num_of_points
 
 def document_parsing(bot, update):
-    file_id = message.voice.file_id
+    file_id = update.message.document.file_id
     newFile = bot.get_file(file_id)
-    newFile.download('voice.ogg')
     my_file_path = newFile.file_path
 
-    file_api_url = "https://api.telegram.org/file/bot{}/".format(my_token)
-    resp = requests.get(file_api_url + my_file_path)
-    result_json = resp.json()
+    try:
+        resp = requests.get(my_file_path)
+        my_received_json = resp.json()
 
-    num_of_polygons, num_of_lines, num_of_points = count_objects_in_geojson(my_received_json)
-    message_text = 'Добрый день! Количество многоугольников в geojson: {}, количество линий:  {}, количество меток: {}'.format(num_of_polygons, num_of_lines, num_of_points)
-    bot.send_message(chat_id=update.message.chat_id, text=message_text)
+        num_of_polygons, num_of_lines, num_of_points = count_objects_in_geojson(my_received_json)
+        message_text = 'Количество многоугольников в созданной карте: {}, количество линий: {}, количество меток: {}.'.format(num_of_polygons, num_of_lines, num_of_points)
+        bot.send_message(chat_id=update.message.chat_id, text=message_text)
+    except:
+        bot.send_message(chat_id=update.message.chat_id, text="Некорректный файл.")
 
 def echo(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
+    bot.send_message(chat_id=update.message.chat_id, text="Отправьте файл geojson, созданный в конструкторе карт Яндекса.")
 
 
 ##
 ### Message and command handlers
 from telegram.ext import CommandHandler
-from telegram.ext import Handler
+#from telegram.ext import Handler
 from telegram.ext import MessageHandler, Filters
 
 # handles first activation of the bot by sending out a greeting
@@ -67,11 +68,11 @@ start_handler = CommandHandler('start', start)
 # we add this handler to the dispatcher so it becomes active
 dispatcher.add_handler(start_handler)
 
-document_handler = Handler(Filters.document, document_parsing)
-dispatcher.add_handler(document_handler)
-
 echo_handler = MessageHandler(Filters.text, echo)
 dispatcher.add_handler(echo_handler)
+
+document_handler = MessageHandler(Filters.document, document_parsing)
+dispatcher.add_handler(document_handler)
 
 
 # Create a webhook to monitor updates from users
@@ -80,12 +81,4 @@ updater.start_webhook(listen="0.0.0.0",
                       url_path=my_token)
 updater.bot.set_webhook("***REMOVED***" + my_token)
 updater.idle()
-
-
-
-
-
-
-
-
 
