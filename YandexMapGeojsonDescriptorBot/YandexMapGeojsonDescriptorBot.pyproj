@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>58b82bcf-fbca-4e87-8d81-fa8c030ed592</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>YandexMapGeojsonDescriptorBot.py</StartupFile>
+    <StartupFile>GeojsonDescriptorBot.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GeojsonDescriptorBot.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_DescriptorBot.py">
       <SubType>Code</SubType>
     </Compile>
