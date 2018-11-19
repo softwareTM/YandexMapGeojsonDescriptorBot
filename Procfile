@@ -1,1 +1,1 @@
-web: python YandexMapGeojsonDescriptorBot.py
+web: python YandexMapGeojsonDescriptorBot/YandexMapGeojsonDescriptorBot.py
