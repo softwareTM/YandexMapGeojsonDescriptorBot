@@ -51,7 +51,7 @@ def document_parsing(bot, update):
         num_of_polygons, num_of_lines, num_of_points = count_objects_in_geojson(my_received_json)
         message_text = 'Количество многоугольников в созданной карте: {}, количество линий: {}, количество меток: {}.'.format(num_of_polygons, num_of_lines, num_of_points)
         with open("result.txt", "w") as file:
-            file.write("message_text")
+            file.write(message_text)
             file.close()
             bot.send_document(chat_id=update.message.chat_id, document=open('result.txt', 'rb'))
             os.remove('result.txt')
