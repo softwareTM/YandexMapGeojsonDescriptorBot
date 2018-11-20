@@ -6,6 +6,7 @@ import requests
 my_token = '***REMOVED***'
 # later used to create a webhook
 my_port = int(os.environ.get('PORT', '8443'))
+filename = 'result'
 
 # initialize updater and correlated dispatcher
 updater = Updater(token=my_token)
@@ -49,7 +50,15 @@ def document_parsing(bot, update):
 
         num_of_polygons, num_of_lines, num_of_points = count_objects_in_geojson(my_received_json)
         message_text = 'Количество многоугольников в созданной карте: {}, количество линий: {}, количество меток: {}.'.format(num_of_polygons, num_of_lines, num_of_points)
-        bot.send_message(chat_id=update.message.chat_id, text=message_text)
+        import tempfile
+        with tempfile.NamedTemporaryFile() as temp:
+            temp.write(message_text)
+            temp.flush()
+            filename = temp.name
+            bot.send_document(chat_id=update.message.chat_id, document=temp)
+        
+        
+        # bot.send_message(chat_id=update.message.chat_id, text=message_text)
     except:
         bot.send_message(chat_id=update.message.chat_id, text="Некорректный файл.")
 
