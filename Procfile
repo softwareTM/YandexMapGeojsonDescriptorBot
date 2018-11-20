@@ -1,1 +1,1 @@
-web: python YandexMapGeojsonDescriptorBot/run.py
+web: newrelic-admin run-program python YandexMapGeojsonDescriptorBot/run.py
