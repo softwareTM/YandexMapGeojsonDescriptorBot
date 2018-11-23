@@ -1,12 +1,19 @@
 import os
 from telegram.ext import Updater
 import requests
+import configparser
+
+# Initialize project values from a config file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 # my telegram bot token, with which we can access the API (shouldn't be here if it was important)
-my_token = '770311010:AAEukJW8czt4FfEgSwQ9BG2kkiumAEXsGSQ'
+my_token = config['Telegram.API']['Token']
 # later used to create a webhook
-my_port = int(os.environ.get('PORT', '8443'))
-filename = 'result'
+default_port = config['Webhook']['Port']
+my_port = int(os.environ.get('PORT', default_port))
+my_webapp = config['Webhook']['WebAppLink']
+#filename = 'result'
 
 # initialize updater and correlated dispatcher
 updater = Updater(token=my_token)
@@ -87,6 +94,6 @@ dispatcher.add_handler(document_handler)
 updater.start_webhook(listen="0.0.0.0",
                       port=my_port,
                       url_path=my_token)
-updater.bot.set_webhook("https://infinite-bayou-65542.herokuapp.com/" + my_token)
+updater.bot.set_webhook(my_webapp + my_token)
 updater.idle()
 

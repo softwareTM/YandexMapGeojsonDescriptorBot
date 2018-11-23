@@ -1,0 +1,6 @@
+[Telegram.API]
+Token= 123456789:bb77AAAbb77AAAbb77AAAbb77AAAbb77AAA
+
+[Webhook]
+Port = 8443
+WebAppLink = https://your-app-name.herokuapp.com/
