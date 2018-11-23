@@ -1,18 +1,19 @@
 import os
 from telegram.ext import Updater
 import requests
-import configparser
+#import configparser
 
 # Initialize project values from a config file
-config = configparser.ConfigParser()
-config.read('config.ini')
+#config = configparser.ConfigParser()
+#config.read('config.ini')
 
 # my telegram bot token, with which we can access the API (shouldn't be here if it was important)
-my_token = config['Telegram.API']['Token']
+my_token = os.environ.get('Token')  #config['Telegram.API']['Token']
 # later used to create a webhook
-default_port = config['Webhook']['Port']
-my_port = int(os.environ.get('PORT', default_port))
-my_webapp = config['Webhook']['WebAppLink']
+#default_port =     #config['Webhook']['Port']
+my_port = int(os.environ.get('Port'))
+#my_port = int(os.environ.get('PORT', default_port))
+my_webapp = os.environ.get('WebAppLink')  #config['Webhook']['WebAppLink']
 #filename = 'result'
 
 # initialize updater and correlated dispatcher
