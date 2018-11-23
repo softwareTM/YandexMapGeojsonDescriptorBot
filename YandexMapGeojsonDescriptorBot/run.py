@@ -8,9 +8,10 @@ from GeojsonDescriptorBot import document_parsing
 
 
 # my telegram bot token, with which we can access the API (shouldn't be here if it was important)
-my_token = '770311010:AAEukJW8czt4FfEgSwQ9BG2kkiumAEXsGSQ'
+my_token = os.environ.get('Token') 
 # later used to create a webhook
-my_port = int(os.environ.get('PORT', '8443'))
+my_port = int(os.environ.get('Port'))
+my_webapp = os.environ.get('WebAppLink')
 
 # initialize updater and correlated dispatcher
 updater = Updater(token=my_token)
@@ -45,5 +46,5 @@ dispatcher.add_handler(document_handler)
 updater.start_webhook(listen="0.0.0.0",
                       port=my_port,
                       url_path=my_token)
-updater.bot.set_webhook("https://powerful-coast-10601.herokuapp.com/" + my_token)
+updater.bot.set_webhook(my_webapp + my_token)
 updater.idle()
