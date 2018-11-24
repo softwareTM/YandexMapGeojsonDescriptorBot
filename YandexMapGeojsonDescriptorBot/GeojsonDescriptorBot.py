@@ -13,16 +13,11 @@ my_token = environ.get('Token', '1111')
 default_port = environ.get('Port', '1111')
 my_port = int(os.environ.get('PORT', default_port))
 my_webapp = environ.get('WebAppLink', 'catch')
-# my telegram bot token, with which we can access the API (shouldn't be here if it was important)
-#my_token = '***REMOVED***'
-#my_token = config['Telegram.API']['Token'] #environ['Token']  
-# later used to create a webhook
-#default_port =     #config['Webhook']['Port']
-#my_port = int(os.environ.get('PORT', '8443'))
+#my_token = config['Telegram.API']['Token']
+#default_port = config['Webhook']['Port']
 #my_port = config['Webhook']['Port'] # int(environ['Port'])
-#my_port = int(os.environ.get('PORT', default_port))
 #my_webapp = config['Webhook']['WebAppLink'] #environ['WebAppLink']  
-#filename = 'result'
+
 
 # initialize updater and correlated dispatcher
 updater = Updater(token=my_token)
@@ -103,7 +98,6 @@ dispatcher.add_handler(document_handler)
 updater.start_webhook(listen="0.0.0.0",
                       port=my_port,
                       url_path=my_token)
-updater.bot.set_webhook("***REMOVED***" + my_token)
-#updater.bot.set_webhook(my_webapp + my_token)
+updater.bot.set_webhook(my_webapp + my_token)
 updater.idle()
 
