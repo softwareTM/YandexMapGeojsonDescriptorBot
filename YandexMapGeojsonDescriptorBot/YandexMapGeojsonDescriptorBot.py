@@ -3,8 +3,8 @@ from time import sleep
 import json
 
 
-url = "https://api.telegram.org/bot770311010:AAEukJW8czt4FfEgSwQ9BG2kkiumAEXsGSQ/"
-token = '770311010:AAEukJW8czt4FfEgSwQ9BG2kkiumAEXsGSQ'
+url = "no"
+token = 'no'
 
 import datetime
 
