@@ -1,4 +1,5 @@
 import os
+from os import environ
 from telegram.ext import Updater
 import requests
 #import configparser
@@ -8,12 +9,12 @@ import requests
 #config.read('config.ini')
 
 # my telegram bot token, with which we can access the API (shouldn't be here if it was important)
-my_token = os.environ.get('Token')  #config['Telegram.API']['Token']
+my_token = environ['Token']  #config['Telegram.API']['Token']
 # later used to create a webhook
 #default_port =     #config['Webhook']['Port']
-my_port = int(os.environ.get('Port'))
+my_port = int(environ['Port'])
 #my_port = int(os.environ.get('PORT', default_port))
-my_webapp = os.environ.get('WebAppLink')  #config['Webhook']['WebAppLink']
+my_webapp = environ['WebAppLink']  #config['Webhook']['WebAppLink']
 #filename = 'result'
 
 # initialize updater and correlated dispatcher
@@ -69,7 +70,7 @@ def document_parsing(bot, update):
     except:
         bot.send_message(chat_id=update.message.chat_id, text="Некорректный файл.")
 
-def echo(bot, update):
+def prompter(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text="Отправьте файл geojson, созданный в конструкторе карт Яндекса.")
 
 
@@ -84,8 +85,8 @@ start_handler = CommandHandler('start', start)
 # we add this handler to the dispatcher so it becomes active
 dispatcher.add_handler(start_handler)
 
-echo_handler = MessageHandler(Filters.text, echo)
-dispatcher.add_handler(echo_handler)
+prompter_handler = MessageHandler(Filters.text, prompter)
+dispatcher.add_handler(prompter_handler)
 
 document_handler = MessageHandler(Filters.document, document_parsing)
 dispatcher.add_handler(document_handler)
