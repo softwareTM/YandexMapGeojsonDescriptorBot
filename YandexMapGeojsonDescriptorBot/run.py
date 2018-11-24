@@ -3,7 +3,7 @@ from telegram.ext import Updater
 import requests
 
 from GeojsonDescriptorBot import start
-from GeojsonDescriptorBot import echo
+from GeojsonDescriptorBot import prompter
 from GeojsonDescriptorBot import document_parsing
 
 
@@ -34,8 +34,8 @@ start_handler = CommandHandler('start', start)
 # we add this handler to the dispatcher so it becomes active
 dispatcher.add_handler(start_handler)
 
-echo_handler = MessageHandler(Filters.text, echo)
-dispatcher.add_handler(echo_handler)
+prompter_handler = MessageHandler(Filters.text, prompter)
+dispatcher.add_handler(prompter_handler)
 
 document_handler = MessageHandler(Filters.document, document_parsing)
 dispatcher.add_handler(document_handler)
