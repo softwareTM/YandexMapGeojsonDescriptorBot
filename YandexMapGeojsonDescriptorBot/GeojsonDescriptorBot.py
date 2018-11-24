@@ -5,15 +5,20 @@ import requests
 import configparser
 
 # Initialize project values from a config file
-config = configparser.ConfigParser()
-config.read('config.ini')
+#config = configparser.ConfigParser()
+#config.read('config.ini')
 
+my_token = environ.get('Token', '1111')
+# later used to create a webhook
+default_port = environ.get('Port', '1111')
+my_port = int(os.environ.get('PORT', default_port))
+my_webapp = environ.get('WebAppLink', 'catch')
 # my telegram bot token, with which we can access the API (shouldn't be here if it was important)
-my_token = '***REMOVED***'
+#my_token = '***REMOVED***'
 #my_token = config['Telegram.API']['Token'] #environ['Token']  
 # later used to create a webhook
 #default_port =     #config['Webhook']['Port']
-my_port = int(os.environ.get('PORT', '8443'))
+#my_port = int(os.environ.get('PORT', '8443'))
 #my_port = config['Webhook']['Port'] # int(environ['Port'])
 #my_port = int(os.environ.get('PORT', default_port))
 #my_webapp = config['Webhook']['WebAppLink'] #environ['WebAppLink']  
