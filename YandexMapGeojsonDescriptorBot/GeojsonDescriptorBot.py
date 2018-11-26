@@ -64,19 +64,6 @@ def document_parsing(bot, update):
     #output.write('First line.\n')
     #bot.send_document(chat_id=update.message.chat_id, document=output)
     #output.close()
-
-    #data = {'sender':   'Alice',
-    #'receiver': 'Bob',
-    #'message':  'We did it!'}
-    #import json
-    #data_json = json.dumps(data)
-    #bot.send_document(chat_id=update.message.chat_id, document=json.JSONEncoder(data))
-    #with open(new_file) as file:
-    #    file.write(message_text)
-    #    file.close()
-    #    bot.send_document(chat_id=update.message.chat_id, document=new_file.getvalue())
-        #os.remove('result.txt')
-
         with open("result.txt", "w") as file:
             file.write(message_text)
             file.close()
@@ -84,7 +71,6 @@ def document_parsing(bot, update):
             os.remove('result.txt')
         
         
-         #bot.send_message(chat_id=update.message.chat_id, text=message_text)
     except json.decoder.JSONDecodeError:
         bot.send_message(chat_id=update.message.chat_id, text="Некорректный формат.")
     except KeyError:

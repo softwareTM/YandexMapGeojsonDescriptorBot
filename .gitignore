@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /YandexMapGeojsonDescriptorBot/config.ini
 /YandexMapGeojsonDescriptorBot/YandexMapGeojsonDescriptorBot.py
+/YandexMapGeojsonDescriptorBot/t.txt
