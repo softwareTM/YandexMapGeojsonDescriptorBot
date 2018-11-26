@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /YandexMapGeojsonDescriptorBot/config.ini
+/YandexMapGeojsonDescriptorBot/YandexMapGeojsonDescriptorBot.py
