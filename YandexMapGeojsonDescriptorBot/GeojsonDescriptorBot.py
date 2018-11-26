@@ -31,7 +31,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 
 ##
-### Function definitions
+#### Function definitions
 
 def count_objects_in_geojson(my_geojson):
     num_of_polygons = 0
