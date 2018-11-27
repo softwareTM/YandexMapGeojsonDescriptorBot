@@ -39,11 +39,12 @@ def count_objects_in_geojson(my_geojson):
     num_of_points = 0
 
     for feature in my_geojson['features']:
-        if feature['geometry']['type'] == 'Polygon':
+        object_type = feature['geometry']['type']
+        if object_type == 'Polygon':
             num_of_polygons += 1
-        elif feature['geometry']['type'] == 'LineString':
+        elif object_type == 'LineString':
             num_of_lines += 1
-        elif feature['geometry']['type'] == 'Point':
+        elif object_type == 'Point':
             num_of_points += 1
     
     return num_of_polygons, num_of_lines, num_of_points
@@ -59,16 +60,27 @@ def document_parsing(bot, update):
 
         num_of_polygons, num_of_lines, num_of_points = count_objects_in_geojson(my_received_json)
         message_text = 'Количество многоугольников в созданной карте: {}, количество линий: {}, количество меток: {}.'.format(num_of_polygons, num_of_lines, num_of_points)
-    #from io import StringIO
-    #output = StringIO()
-    #output.write('First line.\n')
-    #bot.send_document(chat_id=update.message.chat_id, document=output)
-    #output.close()
-        with open("result.txt", "w") as file:
-            file.write(message_text)
+        di = {"Polygons":num_of_polygons, "Lines": num_of_lines, "Points": num_of_points}
+
+        # send a .json as a response
+        with open('result.json', 'w') as file:
+            data = json.dumps(di)
+            file.write(data)
             file.close()
-            bot.send_document(chat_id=update.message.chat_id, document=open('result.txt', 'rb'))
-            os.remove('result.txt')
+            bot.send_document(chat_id=update.message.chat_id, document=open('result.json', 'rb'))
+            os.remove('result.json')
+
+        ## send an octet-stream in-memory
+        #from io import BytesIO
+        #file_like = BytesIO(json.loads(json.dumps(di)))
+        #bot.send_document(chat_id=update.message.chat_id, document=file_like)
+
+        ## send a .txt file
+        #with open("result.txt", "w") as file:
+        #    file.write(message_text)
+        #    file.close()
+        #    bot.send_document(chat_id=update.message.chat_id, document=open('result.txt', 'rb'))
+        #    os.remove('result.txt')
         
         
     except json.decoder.JSONDecodeError:
@@ -113,14 +125,14 @@ dispatcher.add_handler(document_handler)
 
 
 # get updates through GetUpdates (useful for local testing)
-updater.start_polling()
-updater.idle()
+#updater.start_polling()
+#updater.idle()
 
 
 # Create a webhook to monitor updates to the API
-#updater.start_webhook(listen="0.0.0.0",
-#                      port=my_port,
-#                      url_path=my_token)
-#updater.bot.set_webhook(my_webapp + my_token)
-#updater.idle()
+updater.start_webhook(listen="0.0.0.0",
+                      port=my_port,
+                      url_path=my_token)
+updater.bot.set_webhook(my_webapp + my_token)
+updater.idle()
 
