@@ -1,55 +1,9 @@
 import subprocess
+import os
+
+os.chdir(r'C:\Users\Bakhtiyar\source\repos\YandexMapGeojsonDescriptorBot\YandexMapGeojsonDescriptorBot')
+
+os.putenv('HOME', '')
+
 subprocess.call(['git', 'push', 'heroku', 'master'])
 
-
-
-#import os
-#from telegram.ext import Updater
-#import requests
-
-#from GeojsonDescriptorBot import start
-#from GeojsonDescriptorBot import prompter
-#from GeojsonDescriptorBot import document_parsing
-
-
-## my telegram bot token, with which we can access the API (shouldn't be here if it was important)
-#my_token = os.environ.get('Token') 
-## later used to create a webhook
-#my_port = int(os.environ.get('Port'))
-#my_webapp = os.environ.get('WebAppLink')
-
-## initialize updater and correlated dispatcher
-#updater = Updater(token=my_token)
-#dispatcher = updater.dispatcher
-
-## set up logging
-#import logging
-#logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                     level=logging.INFO)
-
-
-###
-#### Message and command handlers
-#from telegram.ext import CommandHandler
-##from telegram.ext import Handler
-#from telegram.ext import MessageHandler, Filters
-
-## handles first activation of the bot by sending out a greeting
-#start_handler = CommandHandler('start', start)
-## we add this handler to the dispatcher so it becomes active
-#dispatcher.add_handler(start_handler)
-
-#prompter_handler = MessageHandler(Filters.text, prompter)
-#dispatcher.add_handler(prompter_handler)
-
-#document_handler = MessageHandler(Filters.document, document_parsing)
-#dispatcher.add_handler(document_handler)
-
-
-
-## Create a webhook to monitor updates from users
-#updater.start_webhook(listen="0.0.0.0",
-#                      port=my_port,
-#                      url_path=my_token)
-#updater.bot.set_webhook(my_webapp + my_token)
-#updater.idle()

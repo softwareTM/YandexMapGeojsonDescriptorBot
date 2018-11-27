@@ -5,19 +5,18 @@ import requests
 import configparser
 import json
 
-# Initialize project values from a config file
-config = configparser.ConfigParser()
-config.read('config.ini')
+# Initialize project values from a config file (when developing locally)
+#config = configparser.ConfigParser()
+#config.read('config.ini')
+#my_token = config['Telegram.API']['Token']
 
+# initialize project values from environment (when deployed on Heroku)
 my_token = environ.get('Token', '1111')
 # later used to create a webhook
 default_port = environ.get('Port', '1111')
 my_port = int(os.environ.get('PORT', default_port))
 my_webapp = environ.get('WebAppLink', 'catch')
-my_token = config['Telegram.API']['Token']
-#default_port = config['Webhook']['Port']
-#my_port = config['Webhook']['Port'] # int(environ['Port'])
-#my_webapp = config['Webhook']['WebAppLink'] #environ['WebAppLink']  
+
 
 
 # initialize updater and correlated dispatcher
